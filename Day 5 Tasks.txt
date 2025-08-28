@@ -1,0 +1,175 @@
+Question 1
+
+using System;
+
+
+    class SmartMeter
+    {
+        public int MeterId { get; set; }
+        public string CustomerName { get; set; }
+
+        public SmartMeter(int meterId, string customerName)
+        {
+            MeterId = meterId;
+            CustomerName = customerName;
+        }
+
+        public virtual void PrintDetails()
+        {
+            Console.WriteLine($"Meter ID: {MeterId}, Name: {CustomerName}");
+        }
+    }
+
+        class ResidentialMeter : SmartMeter
+    {
+        public string HouseType { get; set; }
+
+        public ResidentialMeter(int meterId, string customerName, string houseType)
+            : base(meterId, customerName)
+        {
+            HouseType = houseType;
+        }
+
+        public override void PrintDetails()
+        {
+            Console.WriteLine($"Residential Meter -> ID: {MeterId}, Name: {CustomerName}, HouseType: {HouseType}");
+        }
+    }
+
+       class CommercialMeter : SmartMeter
+    {
+        public string BusinessType { get; set; }
+
+        public CommercialMeter(int meterId, string customerName, string businessType)
+            : base(meterId, customerName)
+        {
+            BusinessType = businessType;
+        }
+
+        public override void PrintDetails()
+        {
+            Console.WriteLine($"Commercial Meter -> ID: {MeterId}, Name: {CustomerName}, BusinessType: {BusinessType}");
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ResidentialMeter resMeter = new ResidentialMeter(201, "Ajit", "Apartment");
+            CommercialMeter comMeter = new CommercialMeter(301, "Aman", "Shop");
+
+            resMeter.PrintDetails();
+            comMeter.PrintDetails();
+        }
+    }
+
+
+
+Question 2
+
+using System;
+
+
+    class SmartMeterAccount
+    {
+        private decimal balance;
+
+               public void Recharge(decimal amount)
+        {
+            if (amount > 0)
+            {
+                balance += amount;
+                Console.WriteLine($"Balance after recharge: {balance}");
+            }
+            else
+            {
+                Console.WriteLine("Recharge amount must be positive.");
+            }
+        }
+        public void Consume(decimal amount)
+        {
+            if (amount <= 0)
+            {
+                Console.WriteLine("Consumption amount must be positive.");
+                return;
+            }
+
+            if (amount <= balance)
+            {
+                balance -= amount;
+                Console.WriteLine($"Balance after consumption: {balance}");
+            }
+            else
+            {
+                Console.WriteLine("Insufficient balance");
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SmartMeterAccount account = new SmartMeterAccount();
+
+            account.Recharge(500);   // Recharge: 500
+            account.Consume(200);    // Consume: 200
+            account.Consume(400);    // Consume: 400
+        }
+    }
+
+Question 3
+
+using System;
+
+
+    
+    abstract class MeterReading
+    {
+        protected int Units;
+
+        public MeterReading(int units)
+        {
+            Units = units;
+        }
+
+        public abstract int CalculateBill();
+    }
+    class ResidentialReading : MeterReading
+    {
+        public ResidentialReading(int units) : base(units) { }
+
+        public override int CalculateBill()
+        {
+            return Units * 5;
+        }
+    }
+
+
+    class CommercialReading : MeterReading
+    {
+        public CommercialReading(int units) : base(units) { }
+
+        public override int CalculateBill()
+        {
+            return Units * 8;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            MeterReading residential = new ResidentialReading(100);  // 100 units
+            MeterReading commercial = new CommercialReading(100);    // 100 units
+
+            Console.WriteLine($"Residential Bill = {residential.CalculateBill()}");
+            Console.WriteLine($"Commercial Bill = {commercial.CalculateBill()}");
+        }
+    }
+
+
+
