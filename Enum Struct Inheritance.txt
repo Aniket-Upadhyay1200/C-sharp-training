@@ -1,0 +1,53 @@
+public enum MeterStatus
+{
+    Active,
+    Inactive,
+    Fault
+}
+
+public struct Reading
+{
+    public DateTime Date { get; }
+    public int UnitsConsumed { get; }
+
+    public Reading(DateTime date, int units)
+    {
+        Date = date;
+        UnitsConsumed = units;
+    }
+}
+
+public abstract class Notifier
+{
+    public abstract void SendMessage(string msg);
+}
+
+public class SmsNotifier : Notifier
+{
+    private string phone;
+
+    public SmsNotifier(string phone)
+    {
+        this.phone = phone;
+    }
+
+    public override void SendMessage(string msg)
+    {
+        Console.WriteLine($"[SMS to {phone}]: {msg}");
+    }
+}
+
+public class EmailNotifier : Notifier
+{
+    private string email;
+
+    public EmailNotifier(string email)
+    {
+        this.email = email;
+    }
+
+    public override void SendMessage(string msg)
+    {
+        Console.WriteLine($"[Email to {email}]: {msg}");
+    }
+}
