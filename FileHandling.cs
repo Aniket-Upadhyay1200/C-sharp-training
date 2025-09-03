@@ -5,6 +5,10 @@ using System.IO;
 class FileHandling
 {
     private string filePath;
+     public FileHandling(string filePath)
+    {
+        this.filePath = filePath;
+    }
      public void WriteInFile(filePath)
     {
         string[] colors = new string[5];
@@ -28,10 +32,7 @@ class FileHandling
         }
     }
 
-    public FileHandling(string filePath)
-    {
-        this.filePath = filePath;
-    }
+   
     public void ReadAndDisplayFile()
     {
         try
@@ -48,3 +49,4 @@ class FileHandling
     
 
 }
+
